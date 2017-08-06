@@ -3,8 +3,17 @@ import http from 'http';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import IOServer from 'socket.io';
+import mongoose from 'mongoose';
+import bluebird from 'bluebird';
 import routes from './routes';
 import config from './config';
+
+// create db connection
+mongoose.connect(['mongodb://',config.database.host, ':', config.database.port, '/', config.database.name].join(''), {
+    // user: config.database.user,
+    // pass: config.database.password
+});
+mongoose.Promise = bluebird;
 
 // create express server
 const app = express();
